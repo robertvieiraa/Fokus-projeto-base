@@ -6,6 +6,7 @@ const banner = document.querySelector('.app__image')
 const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
 const startPauseBt = document.getElementById('start-pause')
+const iniciarOuPausarBt = document.querySelector('#start-pause span')
 const musicaFocoInput = document.getElementById('alternar-musica')
 const musica = new Audio('sons/luna-rise-part-one.mp3')
 musica.loop = true
@@ -74,9 +75,9 @@ function alterarContexto(contexto) {
 
 const contagemRegressiva = () => {
     if (tempoDecorridoEmSegundos <= 0) {
-        zerar()
         audioBeep.play()
         alert('Tempo finalizado!')
+        zerar()
         return
     }
     tempoDecorridoEmSegundos -= 1
@@ -91,11 +92,13 @@ function iniciarOuPausar() {
         zerar()
         return
     }
-    intervaloId = setInterval(contagemRegressiva, 1000)// 1s
     audioPlay.play()
+    intervaloId = setInterval(contagemRegressiva, 1000)// 1s
+    iniciarOuPausarBt.textContent = 'Pausar'
 }
 
 function zerar() {
     clearInterval(intervaloId)
+    iniciarOuPausarBt.textContent = 'Começar'
     intervaloId = null
 }
