@@ -7,6 +7,8 @@ const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
 const startPauseBt = document.getElementById('start-pause')
 const iniciarOuPausarBt = document.querySelector('#start-pause span')
+let iconeStartPauseBt = document.querySelector('.app__card-primary-butto-icon')
+const tempoNaTela = document.getElementById('timer')
 const musicaFocoInput = document.getElementById('alternar-musica')
 const musica = new Audio('sons/luna-rise-part-one.mp3')
 musica.loop = true
@@ -14,8 +16,9 @@ const audioPlay = new Audio("sons/play.wav")
 const audioPause = new Audio("sons/pause.mp3")
 const audioBeep = new Audio("sons/beep.mp3")
 
-let tempoDecorridoEmSegundos = 5
+let tempoDecorridoEmSegundos = 1500
 let intervaloId = null
+
 
 musicaFocoInput.addEventListener('change', () => {
     if (musica.paused) {
@@ -81,7 +84,7 @@ const contagemRegressiva = () => {
         return
     }
     tempoDecorridoEmSegundos -= 1
-    console.log(`Temporizador: ${tempoDecorridoEmSegundos}`)
+    mostrarTempo()
 }
 
 startPauseBt.addEventListener('click', iniciarOuPausar)
@@ -95,10 +98,18 @@ function iniciarOuPausar() {
     audioPlay.play()
     intervaloId = setInterval(contagemRegressiva, 1000)// 1s
     iniciarOuPausarBt.textContent = 'Pausar'
+    iconeStartPauseBt.setAttribute('src', 'imagens/pause.png')
 }
 
 function zerar() {
     clearInterval(intervaloId)
     iniciarOuPausarBt.textContent = 'Começar'
+    iconeStartPauseBt.src = 'imagens/play_arrow.png'
     intervaloId = null
 }
+
+function mostrarTempo() {
+    const tempo = tempoDecorridoEmSegundos
+    tempoNaTela.innerHTML = tempo
+}
+mostrarTempo()
